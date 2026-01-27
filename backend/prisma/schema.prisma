@@ -1,0 +1,213 @@
+// Configuración de Prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// MODELOS DE USUARIO Y AUTENTICACIÓN
+// ============================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  phone     String?
+  role      String   @default("CLIENT") // "CLIENT" o "ADMIN"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders    Order[]
+  addresses Address[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Address {
+  id         String  @id @default(uuid())
+  userId     String
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String  @default("México")
+  isDefault  Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("addresses")
+}
+
+// ============================================
+// CATÁLOGO DE PRODUCTOS
+// ============================================
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  image       String?
+  order       Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products Product[]
+
+  @@index([slug])
+  @@map("categories")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  sku         String   @unique
+  name        String
+  slug        String   @unique
+  description String
+  price       Float
+  comparePrice Float?
+  stock       Int      @default(0)
+  categoryId  String
+  
+  // SEO Fields
+  metaTitle       String?
+  metaDescription String?
+  
+  // Imágenes (URLs de Cloudinary)
+  mainImage  String
+  images     String // JSON array de URLs
+  
+  // Características técnicas
+  specifications String // JSON con especificaciones
+  
+  isActive    Boolean  @default(true)
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category   Category      @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([isFeatured])
+  @@map("products")
+}
+
+// ============================================
+// ÓRDENES Y VENTAS
+// ============================================
+
+model Order {
+  id              String   @id @default(uuid())
+  orderNumber     String   @unique
+  userId          String
+  
+  // Información de contacto
+  email           String
+  phone           String
+  
+  // Dirección de envío
+  shippingAddress String // JSON con dirección completa
+  
+  // Totales
+  subtotal        Float
+  tax             Float
+  shipping        Float
+  total           Float
+  
+  // Estado
+  status          String @default("PENDING") // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  paymentStatus   String @default("PENDING") // PENDING, PAID, FAILED, REFUNDED
+  
+  // Pago
+  paymentMethod   String
+  stripePaymentId String?
+  
+  // Notas
+  notes           String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id])
+  orderItems OrderItem[]
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+// ============================================
+// SERVICIOS (Infraestructura, Eléctricos, Redes)
+// ============================================
+
+model Service {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String
+  icon        String?
+  mainImage   String
+  images      String // JSON array
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@map("services")
+}
+
+// ============================================
+// PROYECTOS / PORTFOLIO
+// ============================================
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  client      String?
+  type        String
+  mainImage   String
+  images      String // JSON array
+  isActive    Boolean  @default(true)
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isFeatured])
+  @@map("projects")
+}

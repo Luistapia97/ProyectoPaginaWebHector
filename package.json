@@ -1,0 +1,32 @@
+{
+  "name": "elecdatos-fullstack",
+  "version": "1.0.0",
+  "description": "Sitio web comercial para ELECDATOS - Soluciones de Infraestructura Industrial",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "npm run build:backend && npm run build:frontend",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop elecdatos-backend",
+    "pm2:restart": "pm2 restart elecdatos-backend",
+    "pm2:logs": "pm2 logs elecdatos-backend"
+  },
+  "keywords": [
+    "elecdatos",
+    "infraestructura-industrial",
+    "typescript",
+    "express",
+    "nextjs",
+    "ecommerce"
+  ],
+  "author": "ELECDATOS",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
