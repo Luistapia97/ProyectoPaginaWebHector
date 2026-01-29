@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+
 export default function Hero() {
   return (
-    <section className="relative h-[90vh] min-h-[600px] flex items-center bg-gradient-to-br from-secondary-900 via-secondary-800 to-primary-900">
+    <section className="relative h-[95vh] min-h-[600px] flex items-center bg-gradient-to-br from-secondary-900 via-secondary-800 to-primary-900">
       {/* Background Image con Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -46,10 +47,11 @@ export default function Hero() {
       </div>
 
       {/* Indicador de Scroll */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white rounded-full mt-2" />
-        </div>
+      
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <svg className="w-10 h-10 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-7 7-7-7 M19 13l-7 7-7-7" />
+        </svg>
       </div>
     </section>
   );
