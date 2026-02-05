@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react';
 
 const stats = [
   { value: '250+', label: 'Proyectos Completados' },
-  { value: '15+', label: 'Años de Experiencia' },
+  { value: '19+', label: 'Años de Experiencia' },
   { value: '50+', label: 'Clientes Satisfechos' },
-  { value: '100%', label: 'Clientes Satisfechos' },
+  { value: '100%', label: 'Satisfacción' },
 ];
 
 export default function Stats() {
@@ -17,7 +17,8 @@ export default function Stats() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
+            entry.target.classList.remove('opacity-0', 'translate-y-4');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
           }
         });
       },
@@ -37,8 +38,8 @@ export default function Stats() {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="stat-item text-center opacity-0"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className="stat-item text-center opacity-0 transition-all duration-700 transform translate-y-4"
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="text-5xl md:text-6xl font-heading font-bold text-primary-600 mb-2">
                 {stat.value}

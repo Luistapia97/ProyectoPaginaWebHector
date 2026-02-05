@@ -2,8 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['res.cloudinary.com'], // Para imágenes de Cloudinary
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
     formats: ['image/avif', 'image/webp'],
+    // Deshabilitar optimización durante desarrollo para evitar errores
+    unoptimized: process.env.NODE_ENV === 'development',
   },
   // Configuración para producción en Hostinger
   output: 'standalone',
