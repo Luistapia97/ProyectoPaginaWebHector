@@ -11,7 +11,7 @@ const projects = [
   {
     title: 'Corporate Headquarters',
     category: 'Commercial',
-    image: '/images/projects/corporate-hq.jpg',
+    image: '/images/services/electrical2.jpg',
     slug: 'corporate-headquarters',
   },
 ];

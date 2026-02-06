@@ -11,7 +11,7 @@ const services = [
   {
     title: 'Sistemas Eléctricos',
     description: 'Instalaciones de media y alta tensión, transformadores, sistemas de puesta a tierra y energía renovable.',
-    image: '/images/services/electrical.jpg',
+    image: '/images/services/cableado3.jpeg',
     link: '/soluciones/sistemas-electricos',
   },
   {

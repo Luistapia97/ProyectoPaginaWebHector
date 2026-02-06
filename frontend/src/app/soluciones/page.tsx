@@ -84,7 +84,7 @@ export default function SolucionesPage() {
             <div className="w-full lg:w-1/2">
               <div className="relative h-[500px] overflow-hidden rounded-lg shadow-xl">
                 <Image
-                  src="/images/services/cableado.webp"
+                  src="/images/services/networks2.jpg"
                   alt="Infraestructura y Conectividad"
                   fill
                   className="object-cover"
