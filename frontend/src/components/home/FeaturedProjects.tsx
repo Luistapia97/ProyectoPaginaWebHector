@@ -5,7 +5,7 @@ const projects = [
   {
     title: 'Modern Villa',
     category: 'Residential',
-    image: '/images/projects/modern-villa.jpg',
+    image: '/images/recidencialcamara.jpeg',
     slug: 'modern-villa',
   },
   {
